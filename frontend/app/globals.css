@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans);
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-primary: #10b981;
+  --color-primary-hover: #059669;
+  --color-secondary: #111111;
+  --color-accent: #10b981;
+  --color-glass: rgba(255, 255, 255, 0.02);
+  --color-glass-border: rgba(255, 255, 255, 0.06);
+
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+}
+
+:root {
+  --color-bg-main: #000000;
+  --color-card: #111111;
+  --color-card-border: #1c1c1c;
+  --color-card-hover: #181818;
+  --color-text-primary: #e5e5e5;
+  --color-text-secondary: #737373;
+  --color-accent-green: #10b981;
+  --color-accent-green-dim: #065f46;
+}
+
+html, body {
+  background: #000000;
+  color: var(--color-text-primary);
+  min-height: 100vh;
+}
+
+@layer components {
+
+  /* Solid Dark Card */
+  .glass-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-2xl);
+    transition: border-color 0.2s ease;
+  }
+
+  .glass-card:hover {
+    border-color: #2a2a2a;
+  }
+
+  /* Primary Button - Emerald */
+  .btn-primary {
+    @apply flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-neutral-300 text-sm font-semibold rounded-xl transition-all active:scale-95;
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border;
+  }
+
+  .badge-success {
+    @apply bg-emerald-500/10 text-emerald-400 border-emerald-500/20;
+  }
+
+  .badge-warning {
+    @apply bg-amber-500/10 text-amber-400 border-amber-500/20;
+  }
+
+  .badge-info {
+    @apply bg-emerald-500/10 text-emerald-400 border-emerald-500/20;
+  }
+
+  /* Input Styles */
+  .input-base {
+    @apply w-full px-4 py-2.5 bg-neutral-900 border border-neutral-700 rounded-xl text-white text-sm placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500/40 transition-all;
+  }
+
+  /* Green dot indicator */
+  .dot-indicator {
+    @apply w-2 h-2 rounded-full bg-emerald-500 inline-block flex-shrink-0;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-800 rounded-full hover:bg-neutral-700 transition-all;
+}
+
+/* Pulse animation for glows */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s infinite ease-in-out;
+}

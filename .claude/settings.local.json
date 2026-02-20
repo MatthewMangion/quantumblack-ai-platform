@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm run dev:*)",
-      "Bash(gh auth status:*)"
+      "Bash(gh auth status:*)",
+      "Bash(/Users/matthewmangion/Downloads/gh_2.87.0_macOS_amd64/bin/gh auth status)"
     ]
   }
 }

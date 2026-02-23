@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Upload, FileText, AlertCircle } from 'lucide-react';
 import type { ClientDocument } from '@/lib/types';
+import { useFocusTrap } from '@/lib/use-focus-trap';
 
 interface DocumentUploadModalProps {
     open: boolean;
@@ -13,6 +14,10 @@ interface DocumentUploadModalProps {
 }
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_EXTENSIONS = new Set([
+    '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx',
+    '.csv', '.txt', '.md', '.json', '.png', '.jpg', '.jpeg', '.svg',
+]);
 
 const categories: { value: ClientDocument['category']; label: string }[] = [
     { value: 'deliverable', label: 'Deliverable' },
@@ -29,6 +34,7 @@ function formatFileSize(bytes: number): string {
 }
 
 export default function DocumentUploadModal({ open, clientId, onClose, onUpload }: DocumentUploadModalProps) {
+    const trapRef = useFocusTrap<HTMLDivElement>(open);
     const [file, setFile] = useState<File | null>(null);
     const [category, setCategory] = useState<ClientDocument['category']>('reference');
     const [dragOver, setDragOver] = useState(false);
@@ -49,7 +55,19 @@ export default function DocumentUploadModal({ open, clientId, onClose, onUpload 
         onClose();
     };
 
+    useEffect(() => {
+        if (!open) return;
+        const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') handleClose(); };
+        document.addEventListener('keydown', onKey);
+        return () => document.removeEventListener('keydown', onKey);
+    }, [open]);
+
     const validateFile = (f: File): boolean => {
+        const ext = f.name.includes('.') ? `.${f.name.split('.').pop()!.toLowerCase()}` : '';
+        if (!ALLOWED_EXTENSIONS.has(ext)) {
+            setError(`Unsupported file type (${ext || 'unknown'}). Allowed: PDF, Office docs, CSV, TXT, images.`);
+            return false;
+        }
         if (f.size > MAX_FILE_SIZE) {
             setError(`File too large (${formatFileSize(f.size)}). Maximum size is 5 MB.`);
             return false;
@@ -122,10 +140,14 @@ export default function DocumentUploadModal({ open, clientId, onClose, onUpload 
                     onClick={handleClose}
                 >
                     <motion.div
+                        ref={trapRef}
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ duration: 0.2 }}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label="Upload Document"
                         className="glass-card w-full max-w-lg"
                         onClick={(e) => e.stopPropagation()}
                     >
@@ -160,6 +182,7 @@ export default function DocumentUploadModal({ open, clientId, onClose, onUpload 
                                     ref={inputRef}
                                     type="file"
                                     className="hidden"
+                                    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.csv,.txt,.md,.json,.png,.jpg,.jpeg,.svg"
                                     onChange={(e) => {
                                         const f = e.target.files?.[0];
                                         if (f) handleFileSelect(f);

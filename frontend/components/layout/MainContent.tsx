@@ -7,8 +7,8 @@ export default function MainContent({ children }: { children: React.ReactNode })
 
     return (
         <main
-            className="min-h-screen transition-all duration-300 ease-in-out"
-            style={{ marginLeft: collapsed ? 72 : 260 }}
+            className="min-h-screen transition-all duration-300 ease-in-out md:ml-[var(--sidebar-width)]"
+            style={{ '--sidebar-width': collapsed ? '72px' : '260px' } as React.CSSProperties}
         >
             {children}
         </main>

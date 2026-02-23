@@ -26,10 +26,67 @@
   --color-accent-green-dim: #065f46;
 }
 
+/* Light theme overrides */
+.theme-light {
+  --color-bg-main: #f8f9fa;
+  --color-card: #ffffff;
+  --color-card-border: #e5e7eb;
+  --color-card-hover: #f3f4f6;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-accent-green: #059669;
+  --color-accent-green-dim: #d1fae5;
+}
+
 html, body {
-  background: #000000;
+  background: var(--color-bg-main);
   color: var(--color-text-primary);
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light theme component overrides */
+.theme-light .glass-card {
+  background: var(--color-card);
+  border-color: var(--color-card-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.theme-light .glass-card:hover {
+  border-color: #d1d5db;
+}
+
+.theme-light .input-base {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+.theme-light .input-base::placeholder {
+  color: #9ca3af;
+}
+
+.theme-light .input-base:focus {
+  border-color: #059669;
+  box-shadow: 0 0 0 2px rgba(5,150,105,0.15);
+}
+
+.theme-light .btn-secondary {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.theme-light .btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+.theme-light ::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+}
+
+.theme-light ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
 }
 
 @layer components {

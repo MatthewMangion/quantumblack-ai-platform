@@ -5,6 +5,7 @@ import TopBar from '@/components/layout/TopBar';
 import { useToast } from '@/lib/toast-context';
 import { dashboardMetrics, projects, activityFeed, currentUser, clients } from '@/lib/mock-data';
 import { useClients } from '@/lib/client-context';
+import UpcomingTasksPanel from '@/components/dashboard/UpcomingTasksPanel';
 import {
   Users,
   Briefcase,
@@ -42,7 +43,7 @@ export default function Dashboard() {
   ];
 
   const quickActions = [
-    { label: 'Upload Doc', icon: Plus, action: () => toast('Document upload coming soon') },
+    { label: 'Upload Doc', icon: Plus, action: () => toast('Document upload coming soon', 'info') },
     { label: 'Start Survey', icon: TrendingUp, action: () => router.push('/people-discovery') },
     { label: 'Book Workshop', icon: Calendar, action: () => router.push('/workshops') },
     { label: 'New Client', icon: Users, action: () => router.push('/clients') },
@@ -54,7 +55,7 @@ export default function Dashboard() {
         title="Dashboard"
         subtitle={`Welcome back, ${currentUser.name.split(' ')[0]}`}
         actions={
-          <button className="btn-primary" onClick={() => toast('New project creation coming soon')}>
+          <button className="btn-primary" onClick={() => toast('New project creation coming soon', 'info')}>
             <Plus className="w-4 h-4" />
             New Project
           </button>
@@ -183,7 +184,7 @@ export default function Dashboard() {
                   </div>
                 </div>
               ))}
-              <button onClick={() => toast('Full audit trail coming soon')} className="w-full btn-secondary text-xs py-2">View Full Audit Trail</button>
+              <button onClick={() => toast('Full audit trail coming soon', 'info')} className="w-full btn-secondary text-xs py-2">View Full Audit Trail</button>
             </div>
 
             {/* Quick Actions */}
@@ -201,6 +202,9 @@ export default function Dashboard() {
                 ))}
               </div>
             </div>
+
+            {/* Upcoming Tasks */}
+            <UpcomingTasksPanel />
           </motion.div>
         </div>
       </main>

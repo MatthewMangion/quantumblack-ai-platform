@@ -18,20 +18,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const statusConfig: Record<string, { color: string, bg: string, label: string }> = {
-    upcoming: { color: '#10b981', bg: 'rgba(16, 185, 129, 0.12)', label: 'Upcoming' },
-    in_progress: { color: '#059669', bg: 'rgba(5, 150, 105, 0.12)', label: 'In Progress' },
-    completed: { color: '#34d399', bg: 'rgba(52, 211, 153, 0.12)', label: 'Completed' },
-    cancelled: { color: '#ef4444', bg: 'rgba(239, 68, 68, 0.15)', label: 'Cancelled' },
-};
-
-const categoryColors: Record<string, string> = {
-    Leadership: '#10b981',
-    Technical: '#059669',
-    Governance: '#047857',
-    Department: '#f59e0b',
-};
+import { workshopStatusConfig as statusConfig, categoryColors } from '@/lib/constants';
 
 export default function WorkshopsPage() {
     const { toast } = useToast();
@@ -48,7 +35,7 @@ export default function WorkshopsPage() {
                 title="Workshop & Training"
                 subtitle="Schedule, manage, and track AI training programmes"
                 actions={
-                    <button className="btn-primary" onClick={() => toast('Workshop creation coming soon')}>
+                    <button className="btn-primary" onClick={() => toast('Workshop creation coming soon', 'info')}>
                         <Plus className="w-4 h-4" />
                         Create Workshop
                     </button>

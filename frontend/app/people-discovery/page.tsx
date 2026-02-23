@@ -243,7 +243,7 @@ export default function PeopleDiscoveryPage() {
                             <h2 className="text-lg font-bold text-white">Readiness Survey Builder</h2>
                             <div className="flex gap-2">
                                 <button className="btn-secondary text-xs" onClick={() => toast('Template loaded')}>Load Template</button>
-                                <button className="btn-primary" onClick={() => toast('Question editor coming soon')}>
+                                <button className="btn-primary" onClick={() => toast('Question editor coming soon', 'info')}>
                                     <Plus className="w-4 h-4" /> Add Question
                                 </button>
                             </div>
